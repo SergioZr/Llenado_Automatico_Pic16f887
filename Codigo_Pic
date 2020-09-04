@@ -1,0 +1,22 @@
+int b, h;
+float Lt;
+
+void main() {
+ ANSEL = 0; ANSELH = 0;
+ TRISD = 1; TRISE.f3 = 0;                 //Configuracion de puertos
+ PORTD = 0; PORTE.f3 = 0;
+ OSCCON = 0x72;                           //Configuracion del oscilador interno
+ HCSR04_Init();                          //Inicializacion del Ultrasonido
+while(1){
+    b = HCSR04_Get_Distance(_cm);             //Dato de ultrasonido
+    h= 40-b;                                  
+    Lt = (3.1416)*(1.69)*(h);               //Formula de Volumen
+    Lt=Lt*1000;                              
+      if(Lt = 0){                             //Si tiene 0 litros, empieza el llenado
+        PORTE.f3 = 1; 
+   }
+  else {                                     // de lo contrario se cierra el paso del agua
+    PORTE.f3 = 0; 
+  } 
+ } 
+}
